@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ClientFlurl.Tests.IntegrationTest
 {
-    public class ViaCepIntegrationTest : IntegrationBaseTest<Startup>
+    public class ViaCepIntegrationTest : IntegrationTestBase<Startup>
     {
 
         [Fact(DisplayName = "Should return internal server error when passed an invalid zip code")]

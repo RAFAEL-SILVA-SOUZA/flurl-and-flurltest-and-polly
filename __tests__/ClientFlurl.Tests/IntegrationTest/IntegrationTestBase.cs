@@ -8,12 +8,12 @@ using System.Net.Http;
 
 namespace ClientFlurl.Tests.IntegrationTest
 {
-    public abstract class IntegrationBaseTest<TStartup> : BaseTest where TStartup : class
+    public abstract class IntegrationTestBase<TStartup> : BaseTest where TStartup : class
     {
         private readonly TestServer _server;
         protected readonly HttpClient _client;
 
-        public IntegrationBaseTest()
+        public IntegrationTestBase()
         {
             // Arrange
             var statupDirectory = AssemblyDirectory;

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace ClientFlurl.Tests
 {
-    public class ViaCepClientTests : UnitBaseTest<IViaCepClient, ViaCepClient>
+    public class ViaCepClientTests : UnitTestBase<IViaCepClient, ViaCepClient>
     {
         public ViaCepClientTests() => PrepareService("https://viacep.com.br/ws/");
         private const string zip_code = "24740500";
