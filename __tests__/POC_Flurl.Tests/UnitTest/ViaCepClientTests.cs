@@ -23,7 +23,8 @@ namespace POC_Flurl.Tests
         {
             //Arrange
             CreateHttpTest(new { },true);
-            
+
+            //Act
             Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode("XPTO");
 
             //Assert 
