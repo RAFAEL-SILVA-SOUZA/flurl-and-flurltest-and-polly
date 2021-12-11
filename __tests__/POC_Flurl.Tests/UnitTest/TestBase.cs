@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Flurl.Http.Testing;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace POC_Flurl.Tests
             _viaCepClient.Should().NotBeNull();
         }
 
-        protected void CreateHttpTest<T>(T response, bool realHttp = false, int statusCode = 200) where T : class
+        protected void CreateHttpTest<T>(T response, bool realHttp = false, int statusCode = StatusCodes.Status200OK) where T : class
         {
             _httpTest = new HttpTest();
             _httpTest.RespondWith(JsonConvert.SerializeObject(response), statusCode);
