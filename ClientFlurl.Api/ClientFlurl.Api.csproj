@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClientFlurl\ClientFlurl.Domain.csproj" />
+    <ProjectReference Include="..\ClientFlurl.Domain\ClientFlurl.Domain.csproj" />
   </ItemGroup>
 
 </Project>

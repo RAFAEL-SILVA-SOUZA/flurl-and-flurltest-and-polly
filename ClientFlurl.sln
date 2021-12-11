@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Domain", "ClientFlurl\ClientFlurl.Domain.csproj", "{6A02297B-BA16-4750-B267-891F1DD8D85C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Domain", "ClientFlurl.Domain\ClientFlurl.Domain.csproj", "{6A02297B-BA16-4750-B267-891F1DD8D85C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Api", "ClientFlurl.Api\ClientFlurl.Api.csproj", "{9595B70E-41A4-4E45-B2C7-4C2304CE3680}"
 EndProject
