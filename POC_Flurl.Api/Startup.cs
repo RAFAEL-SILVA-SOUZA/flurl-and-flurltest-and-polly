@@ -1,20 +1,12 @@
-using Flurl.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using POC_Flurl.Api.Middleware;
 using POC_Flurl.Entities;
-using POC_Flurl.Helpers;
 using POC_Flurl.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace POC_Flurl.Api
 {
@@ -27,9 +19,9 @@ namespace POC_Flurl.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
+            services.AddGlobalExceptionHandlerMiddleware();
             services.AddScoped<IViaCepClient, ViaCepClient>();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddControllers();
@@ -39,7 +31,6 @@ namespace POC_Flurl.Api
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -48,7 +39,7 @@ namespace POC_Flurl.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "POC_Flurl.Api v1"));
             }
-
+            app.UseGlobalExceptionHandlerMiddleware();
             app.UseHttpsRedirection();
 
             app.UseRouting();

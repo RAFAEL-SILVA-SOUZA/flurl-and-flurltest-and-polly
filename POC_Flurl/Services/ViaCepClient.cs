@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using POC_Flurl.Entities;
 using POC_Flurl.Helpers;
+using POC_Flurl.Resources;
 using System.Threading.Tasks;
 
 namespace POC_Flurl.Services
@@ -24,17 +25,25 @@ namespace POC_Flurl.Services
         {
             try
             {
-                var address = await BuildRetryPolicy()
-                                         .ExecuteAsync(() => appSettings.BaseUrl
-                                                                  .AppendPathSegment($"{cep}//json//")
-                                                                  .GetJsonAsync<Address>());
+                if (string.IsNullOrWhiteSpace(cep))
+                {
+                    logger.LogError(Messages.Message_null_zip_code);
+                    return null;
+                }
 
-                logger.LogInformation($"Successfully received: {JsonConvert.SerializeObject(address)}");
+                var address = await BuildRetryPolicy()
+                                    .ExecuteAsync(() => appSettings
+                                                        .BaseUrl
+                                                        .AppendPathSegment($"{cep}//json//")
+                                                        .GetJsonAsync<Address>());
+
+                logger.LogInformation(string.Format(Messages.Success_to_received_response, JsonConvert.SerializeObject(address)));
+
                 return address;
             }
             catch (FlurlHttpException ex)
             {
-                logger.LogError(ex.Message);
+                logger.LogError(string.Format(Messages.Error_to_received_response, ex.StatusCode));
                 throw ex;
             }
         }

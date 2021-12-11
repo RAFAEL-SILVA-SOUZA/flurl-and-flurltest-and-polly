@@ -1,4 +1,5 @@
-﻿using Flurl.Http.Testing;
+﻿using FluentAssertions;
+using Flurl.Http.Testing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -17,10 +18,15 @@ namespace POC_Flurl.Tests
 
         protected virtual void PrepareService(string baseUrl)
         {
-            var appSettings = new AppSettings() { BaseUrl = baseUrl};
+            var appSettings = new AppSettings() { BaseUrl = baseUrl };
             _logger = Substitute.For<ILogger<TService>>();
             _appSettings = Options.Create(appSettings);
-            _viaCepClient = (TIService)Activator.CreateInstance(typeof(TService),_logger, _appSettings);
+            _viaCepClient = (TIService)Activator.CreateInstance(typeof(TService), _logger, _appSettings);
+
+            appSettings.Should().NotBeNull();
+            _logger.Should().NotBeNull();
+            _appSettings.Should().NotBeNull();
+            _viaCepClient.Should().NotBeNull();
         }
 
         protected void CreateHttpTest<T>(T response, bool realHttp = false, int statusCode = 200) where T : class
@@ -28,6 +34,11 @@ namespace POC_Flurl.Tests
             _httpTest = new HttpTest();
             _httpTest.RespondWith(JsonConvert.SerializeObject(response), statusCode);
             if (realHttp) _httpTest.AllowRealHttp();
+
+            _httpTest.Should().NotBeNull();
         }
+
+        protected T GetInstanceByJson<T>(string json)
+        => JsonConvert.DeserializeObject<T>(json);
     }
 }

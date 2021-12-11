@@ -15,70 +15,70 @@ namespace POC_Flurl.Tests
     public class ViaCepClientTests : TestBase<IViaCepClient, ViaCepClient>
     {
         public ViaCepClientTests() => PrepareService("https://viacep.com.br/ws/");
+        private const string zip_code = "24740500";
 
         [Fact(DisplayName = "Test if the method got the object just like in the mock")]
         public async Task Should_be_getaddressbyzipcode_success()
         {
-            var enderecoMock = new Address("24740-500", "Rua Libanio Ratazi",
-                                            "", "Coelho",
-                                            "São Gonçalo", "RJ",
-                                            "3304904", "",
-                                            "21", "5897");
+            var enderecoMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
             CreateHttpTest(enderecoMock);
-            
-            var address = await _viaCepClient.GetAddressByZipCode("24740500");
+
+            var address = await _viaCepClient.GetAddressByZipCode(zip_code);
 
             address.Should().NotBeNull();
             address.Should().BeOfType<Address>();
             address.Should().BeEquivalentTo(enderecoMock);
-            _logger.Received(1).Log(LogLevel.Information, $"Successfully received: {JsonConvert.SerializeObject(address)}");
+            _logger.Received(1).Log(LogLevel.Information, string.Format(Resources.Messages.Success_to_received_response, JsonConvert.SerializeObject(address)));
+        }
+
+        [Fact(DisplayName = "Test if the method not got the object")]
+        public async Task Should_be_getaddressbyzipcode_cep_null()
+        {            
+            CreateHttpTest(new {});
+            var address = await _viaCepClient.GetAddressByZipCode(null);
+
+            address.Should().BeNull();
+            _logger.Received(1).Log(LogLevel.Error, Resources.Messages.Message_null_zip_code);
         }
 
         [Theory(DisplayName = "Tests the cases where the server's return is not in the status code 200 line")]
-        [InlineData(StatusCodes.Status400BadRequest, "Call failed with status code 400 (Bad Request): GET https://viacep.com.br/ws/24740500//json//")]
-        [InlineData(StatusCodes.Status401Unauthorized, "Call failed with status code 401 (Unauthorized): GET https://viacep.com.br/ws/24740500//json//")]
-        [InlineData(StatusCodes.Status500InternalServerError, "Call failed with status code 500 (Internal Server Error): GET https://viacep.com.br/ws/24740500//json//")]
-        [InlineData(StatusCodes.Status503ServiceUnavailable, "Call failed with status code 503 (Service Unavailable): GET https://viacep.com.br/ws/24740500//json//")]
-        public async Task Should_be_getaddressbyzipcode_error(int statusCode, string message)
+        [InlineData(StatusCodes.Status400BadRequest)]
+        [InlineData(StatusCodes.Status401Unauthorized)]
+        [InlineData(StatusCodes.Status500InternalServerError)]
+        [InlineData(StatusCodes.Status503ServiceUnavailable)]
+        public async Task Should_be_getaddressbyzipcode_error(int statusCode)
         {
             CreateHttpTest<object>(new { }, statusCode: statusCode);
-            Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode("24740500");
-            await act.Should().ThrowAsync<FlurlHttpException>();
-            _logger.Received(1).Log(LogLevel.Error, message);
+            Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode(zip_code);
+            await act.Should().ThrowAsync<FlurlHttpException>().Where(x => x.StatusCode == statusCode);
+            _logger.Received(1).Log(LogLevel.Error, string.Format(Resources.Messages.Error_to_received_response, statusCode));
         }
 
 
         [Fact(DisplayName = "Test if the method got the object exactly as it came from the server")]
         public async Task Should_be_getaddressbyzipcode_realhttp_success()
         {
-            var addressMock = new Address("24740-500", "Rua Libanio Ratazi",
-                                          "", "Coelho",
-                                          "São Gonçalo", "RJ",
-                                          "3304904", "",
-                                          "21", "5897");
+            var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
 
             CreateHttpTest(addressMock, true);
 
-            var address = await _viaCepClient.GetAddressByZipCode("24740500");
+            var address = await _viaCepClient.GetAddressByZipCode(zip_code);
 
             address.Should().NotBeNull();
             address.Should().BeOfType<Address>();
             address.Should().BeEquivalentTo(addressMock);
-            _logger.Received(1).Log(LogLevel.Information, $"Successfully received: {JsonConvert.SerializeObject(address)}");
+
+            _logger.Received(1).Log(LogLevel.Information, string.Format(Resources.Messages.Success_to_received_response, JsonConvert.SerializeObject(address)));
         }
 
         [Fact(DisplayName = "Test if the method got the object other than how it came from the server")]
         public async Task Should_be_getaddressbyzipcode_realhttp_compare_error()
         {
-            var addressMock = new Address("24740-500", "Rua Libanio",
-                                          "", "Coelho",
-                                          "São Gonçalo", "RJ",
-                                          "3304904", "",
-                                          "21", "5897");
+            var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_incorrect);
 
             CreateHttpTest(addressMock, true);
 
-            var address = await _viaCepClient.GetAddressByZipCode("24740500");
+            var address = await _viaCepClient.GetAddressByZipCode(zip_code);
 
             address.Should().NotBeNull();
             address.Should().BeOfType<Address>();

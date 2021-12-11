@@ -1,31 +1,48 @@
-﻿namespace POC_Flurl.Entities
+﻿using Newtonsoft.Json;
+
+namespace POC_Flurl.Entities
 {
 
     public class Address
     {
-        public Address(string cep, string logradouro, string complemento, string bairro, string localidade, string uf, string ibge, string gia, string ddd, string siafi)
+        public Address(string ZipCode, string PublicPlace, 
+                       string Complement, string Neighborhood, 
+                       string Location, string uf, 
+                       string ibge, string gia, 
+                       string ddd, string siafi)
         {
-            Cep = cep;
-            Logradouro = logradouro;
-            Complemento = complemento;
-            Bairro = bairro;
-            Localidade = localidade;
-            Uf = uf;
-            Ibge = ibge;
-            Gia = gia;
-            Ddd = ddd;
-            Siafi = siafi;
+            this.ZipCode = ZipCode;
+            this.PublicPlace = PublicPlace;
+            this.Complement = Complement;
+            this.Neighborhood = Neighborhood;
+            this.Location = Location;
+            this.Uf = uf;
+            this.Ibge = ibge;
+            this.Gia = gia;
+            this.Ddd = ddd;
+            this.Siafi = siafi;
         }
 
-        public string Cep { get; private set; }
-        public string Logradouro { get; private set; }
-        public string Complemento { get; private set; }
-        public string Bairro { get; private set; }
-        public string Localidade { get; private set; }
+        [JsonProperty("cep")]
+        public string ZipCode { get; private set; }
+        [JsonProperty("logradouro")]
+        public string PublicPlace { get; private set; }
+
+        [JsonProperty("complemento")]
+        public string Complement { get; private set; }
+        [JsonProperty("bairro")]
+        public string Neighborhood { get; private set; }
+        [JsonProperty("localidade")]
+        public string Location { get; private set; }
+        [JsonProperty("uf")]
         public string Uf { get; private set; }
+        [JsonProperty("ibge")]
         public string Ibge { get; private set; }
+        [JsonProperty("gia")]
         public string Gia { get; private set; }
+        [JsonProperty("ddd")]
         public string Ddd { get; private set; }
+        [JsonProperty("siafi")]
         public string Siafi { get; private set; }
     }
 
