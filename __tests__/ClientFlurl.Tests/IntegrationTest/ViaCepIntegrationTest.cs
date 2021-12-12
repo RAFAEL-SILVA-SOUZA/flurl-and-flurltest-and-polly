@@ -1,6 +1,5 @@
-﻿using FluentAssertions;
-using ClientFlurl.Api;
-using ClientFlurl.Entities;
+﻿using ClientFlurl.Api;
+using FluentAssertions;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +13,7 @@ namespace ClientFlurl.Tests.IntegrationTest
         public async Task Raise_exception_on_get_address_by_cep()
         {
             //Arrange
-            CreateHttpTest(GetInstanceByJson<Address>(Resources.MockJson.Address_correct));
+            CreateHttpTest(Resources.MockJson.Address_correct);
 
             // Act
             var response = await _client.GetAsync("/viacep?cep=XPTO");
@@ -28,7 +27,7 @@ namespace ClientFlurl.Tests.IntegrationTest
         public async Task Should_be_get_address_by_cep()
         {
             //Arrange
-            CreateHttpTest(GetInstanceByJson<Address>(Resources.MockJson.Address_correct));
+            CreateHttpTest(Resources.MockJson.Address_correct);
 
             // Act
             var response = await _client.GetAsync("/viacep?cep=24740500");

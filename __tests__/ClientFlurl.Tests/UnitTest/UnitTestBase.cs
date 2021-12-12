@@ -7,7 +7,7 @@ using System;
 
 namespace ClientFlurl.Tests
 {
-    public abstract class UnitTestBase<TIService, TService> : BaseTest
+    public abstract class UnitTestBase<TIService, TService> : TestBase
     {
         protected IOptions<AppSettings> _appSettings;
         protected TIService _viaCepClient;

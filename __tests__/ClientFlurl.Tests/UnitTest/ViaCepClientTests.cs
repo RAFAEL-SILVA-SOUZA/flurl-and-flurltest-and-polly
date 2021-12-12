@@ -22,7 +22,7 @@ namespace ClientFlurl.Tests
         public async Task Raise_exception_on_getaddressbyzipcode()
         {
             //Arrange
-            CreateHttpTest(new { },true);
+            CreateHttpTest(realHttp:true);
 
             //Act
             Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode("XPTO");
@@ -37,7 +37,7 @@ namespace ClientFlurl.Tests
         {
             //Arrange
             var enderecoMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
-            CreateHttpTest(enderecoMock);
+            CreateHttpTest(Resources.MockJson.Address_correct);
 
             //Act
             var address = await _viaCepClient.GetAddressByZipCode(zip_code);
@@ -53,7 +53,7 @@ namespace ClientFlurl.Tests
         public async Task Should_be_getaddressbyzipcode_cep_null()
         {
             //Arrange
-            CreateHttpTest(new {});
+            CreateHttpTest();
             
             //Act
             var address = await _viaCepClient.GetAddressByZipCode(null);
@@ -71,7 +71,7 @@ namespace ClientFlurl.Tests
         public async Task Raise_exception_on_getaddressbyzipcode_status_codes(int statusCode)
         {
             //Arrange
-            CreateHttpTest<object>(new { }, statusCode: statusCode);
+            CreateHttpTest(statusCode: statusCode);
             
             //Act
             Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode(zip_code);
@@ -87,7 +87,7 @@ namespace ClientFlurl.Tests
         {
             //Arrange
             var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
-            CreateHttpTest(addressMock, true);
+            CreateHttpTest(Resources.MockJson.Address_correct, true);
 
             //Act
             var address = await _viaCepClient.GetAddressByZipCode(zip_code);
@@ -104,7 +104,7 @@ namespace ClientFlurl.Tests
         {
             //Arrange
             var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_incorrect);
-            CreateHttpTest(addressMock, true);
+            CreateHttpTest(Resources.MockJson.Address_incorrect, true);
 
             //Act
             var address = await _viaCepClient.GetAddressByZipCode(zip_code);

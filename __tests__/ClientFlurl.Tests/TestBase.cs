@@ -5,14 +5,14 @@ using Newtonsoft.Json;
 
 namespace ClientFlurl.Tests
 {
-    public abstract class BaseTest
+    public abstract class TestBase
     {
         protected HttpTest _httpTest;
 
-        protected void CreateHttpTest<T>(T response, bool realHttp = false, int statusCode = StatusCodes.Status200OK) where T : class
+        protected void CreateHttpTest(string response = "", bool realHttp = false, int statusCode = StatusCodes.Status200OK)
         {
             _httpTest = new HttpTest();
-            _httpTest.RespondWith(JsonConvert.SerializeObject(response), statusCode);
+            _httpTest.RespondWith(response, statusCode);
             if (realHttp) _httpTest.AllowRealHttp();
 
             _httpTest.Should().NotBeNull();
