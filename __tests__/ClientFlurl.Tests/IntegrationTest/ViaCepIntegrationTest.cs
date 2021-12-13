@@ -19,7 +19,7 @@ namespace ClientFlurl.Tests.IntegrationTest
             var response = await _client.GetAsync("/viacep?cep=XPTO");
 
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
 

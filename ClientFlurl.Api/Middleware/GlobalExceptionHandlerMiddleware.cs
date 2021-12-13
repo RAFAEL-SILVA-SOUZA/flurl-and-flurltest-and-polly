@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Flurl.Http;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,17 +25,17 @@ namespace ClientFlurl.Api.Middleware
             {
                 await next(context);
             }
-            catch (Exception ex)
+            catch (FlurlHttpException ex)
             {
                 _logger.LogError($"Unexpected error: {ex}");
                 await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, FlurlHttpException exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)exception.StatusCode;
 
             var json = new
             {
