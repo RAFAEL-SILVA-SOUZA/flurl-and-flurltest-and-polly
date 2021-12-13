@@ -3,5 +3,6 @@
     public class AppSettings
     {
         public string BaseUrl { get; set; }
+        public int PollyRetryCount { get; set; }
     }
 }

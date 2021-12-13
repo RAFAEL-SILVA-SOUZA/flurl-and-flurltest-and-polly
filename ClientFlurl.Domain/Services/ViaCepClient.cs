@@ -15,7 +15,7 @@ namespace ClientFlurl.Services
         private readonly ILogger<ViaCepClient> logger;
         private readonly AppSettings appSettings;
 
-        public ViaCepClient(ILogger<ViaCepClient> logger, IOptions<AppSettings> option)
+        public ViaCepClient(ILogger<ViaCepClient> logger, IOptions<AppSettings> option) : base(option.Value)
         {
             this.logger = logger;
             appSettings = option.Value;
@@ -28,18 +28,18 @@ namespace ClientFlurl.Services
                 if (string.IsNullOrWhiteSpace(cep))
                 {
                     logger.LogError(Messages.Message_null_zip_code);
-                    return null;
+                    return default;
                 }
 
-                var address = await BuildRetryPolicy()
-                                    .ExecuteAsync(() => appSettings
-                                                        .BaseUrl
-                                                        .AppendPathSegment($"{cep}//json//")
-                                                        .GetJsonAsync<Address>());
+                var address = await BuildRetryPolicy
+                                        .ExecuteAsync(() => appSettings
+                                            .BaseUrl
+                                            .AppendPathSegment($"{cep}//json//")
+                                            .GetJsonAsync<Address>());
 
                 logger.LogInformation(string.Format(Messages.Success_to_received_response, JsonConvert.SerializeObject(address)));
 
-                return address;
+                return address.IsValid() ? address : default;
             }
             catch (FlurlHttpException ex)
             {

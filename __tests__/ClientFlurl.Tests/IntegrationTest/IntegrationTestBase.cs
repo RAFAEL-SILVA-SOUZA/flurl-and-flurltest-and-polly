@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
 using System.Net.Http;
 
 namespace ClientFlurl.Tests.IntegrationTest
