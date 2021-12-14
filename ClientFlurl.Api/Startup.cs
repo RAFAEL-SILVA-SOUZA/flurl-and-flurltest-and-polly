@@ -1,15 +1,14 @@
+using ClientFlurl.Api.Filters;
+using ClientFlurl.Domain.Entities;
+using ClientFlurl.Entities;
+using ClientFlurl.Services;
+using Flurl.Http.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ClientFlurl.Api.Middleware;
-using ClientFlurl.Entities;
-using ClientFlurl.Services;
-using Flurl.Http.Configuration;
-using ClientFlurl.Domain.Entities;
-using ClientFlurl.Api.Filters;
 
 namespace ClientFlurl.Api
 {
@@ -35,8 +34,6 @@ namespace ClientFlurl.Api
             services.AddScoped<IViaCepClient, ViaCepClient>();
             services.AddScoped<INotificationContext, NotificationContext>();
 
-            services.AddGlobalExceptionHandlerMiddleware();            
-
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddControllers(config =>
@@ -57,7 +54,7 @@ namespace ClientFlurl.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClientFlurl.Api v1"));
             }
-            app.UseGlobalExceptionHandlerMiddleware();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
