@@ -27,9 +27,9 @@ namespace ClientFlurl.Entities
         [JsonProperty("siafi")]
         public string Siafi { get; set; }
 
-        public bool IsValid()
+        public bool IsNotValid()
         {
-            return !string.IsNullOrWhiteSpace(ZipCode);
+            return string.IsNullOrWhiteSpace(ZipCode);
         }
     }
 

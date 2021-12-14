@@ -7,6 +7,9 @@ using Microsoft.OpenApi.Models;
 using ClientFlurl.Api.Middleware;
 using ClientFlurl.Entities;
 using ClientFlurl.Services;
+using Flurl.Http.Configuration;
+using ClientFlurl.Domain.Entities;
+using ClientFlurl.Api.Filters;
 
 namespace ClientFlurl.Api
 {
@@ -27,10 +30,19 @@ namespace ClientFlurl.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGlobalExceptionHandlerMiddleware();
+            services.AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
+
             services.AddScoped<IViaCepClient, ViaCepClient>();
+            services.AddScoped<INotificationContext, NotificationContext>();
+
+            services.AddGlobalExceptionHandlerMiddleware();            
+
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddControllers();
+
+            services.AddControllers(config =>
+            {
+                config.Filters.Add<NotificationFilter>();
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientFlurl.Api", Version = "v1" });

@@ -11,18 +11,13 @@ namespace ClientFlurl.Api.Controllers
         private readonly IViaCepClient viaCepClient;
 
         public ViaCepController(IViaCepClient viaCepClient)
-        {
-            this.viaCepClient = viaCepClient;
-        }
+        => this.viaCepClient = viaCepClient;
 
         [HttpGet]
-        public async Task<IActionResult> Get(string cep)
+        public async Task<IActionResult> Get(string zipCode)
         {
-            var endereco = await viaCepClient.GetAddressByZipCode(cep);
-
-            if (endereco == default) return NoContent();
-
-            return Ok(endereco);
+            var endereco = await viaCepClient.GetAddressByZipCode(zipCode);
+            return endereco != default ? Ok(endereco) : NoContent();
         }
     }
 }

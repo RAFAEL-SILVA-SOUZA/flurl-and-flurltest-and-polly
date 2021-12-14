@@ -17,7 +17,7 @@ namespace ClientFlurl.Tests.UnitTest
             //Act
 
             //Assert 
-            address.IsValid().Should().BeTrue();
+            address.IsNotValid().Should().BeFalse();
         }
 
         [Fact(DisplayName = "Test if class Adrress not is valid")]
@@ -32,7 +32,7 @@ namespace ClientFlurl.Tests.UnitTest
             address.ZipCode = null;
 
             //Assert 
-            address.IsValid().Should().BeFalse();
+            address.IsNotValid().Should().BeTrue();
         }
 
     }

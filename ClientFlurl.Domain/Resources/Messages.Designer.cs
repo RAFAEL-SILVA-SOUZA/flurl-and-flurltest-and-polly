@@ -79,6 +79,15 @@ namespace ClientFlurl.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Success but no content.
+        /// </summary>
+        internal static string Success_but_no_content {
+            get {
+                return ResourceManager.GetString("Success_but_no_content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully received: {0}.
         /// </summary>
         internal static string Success_to_received_response {

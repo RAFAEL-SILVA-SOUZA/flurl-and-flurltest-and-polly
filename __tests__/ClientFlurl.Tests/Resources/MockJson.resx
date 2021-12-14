@@ -145,4 +145,18 @@
   "siafi": "5897"
 }</value>
   </data>
+  <data name="Address_invalid" xml:space="preserve">
+    <value>{
+  "zipCode": null,
+  "publicPlace": null,
+  "complement": null,
+  "district": null,
+  "location": null,
+  "federativeUnit": null,
+  "ibge": null,
+  "gia": null,
+  "ddd": null,
+  "siafi": null
+}</value>
+  </data>
 </root>

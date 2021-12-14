@@ -99,5 +99,25 @@ namespace ClientFlurl.Tests.Resources {
                 return ResourceManager.GetString("Address_incorrect", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;zipCode&quot;: null,
+        ///  &quot;publicPlace&quot;: null,
+        ///  &quot;complement&quot;: null,
+        ///  &quot;district&quot;: null,
+        ///  &quot;location&quot;: null,
+        ///  &quot;federativeUnit&quot;: null,
+        ///  &quot;ibge&quot;: null,
+        ///  &quot;gia&quot;: null,
+        ///  &quot;ddd&quot;: null,
+        ///  &quot;siafi&quot;: null
+        ///}.
+        /// </summary>
+        internal static string Address_invalid {
+            get {
+                return ResourceManager.GetString("Address_invalid", resourceCulture);
+            }
+        }
     }
 }

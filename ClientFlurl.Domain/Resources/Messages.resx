@@ -123,6 +123,9 @@
   <data name="Message_null_zip_code" xml:space="preserve">
     <value>It is necessary to inform a zip code to carry out the consultation</value>
   </data>
+  <data name="Success_but_no_content" xml:space="preserve">
+    <value>Success but no content</value>
+  </data>
   <data name="Success_to_received_response" xml:space="preserve">
     <value>Successfully received: {0}</value>
   </data>
