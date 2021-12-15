@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System.Net.Http;
 
-namespace ClientFlurl.Tests.IntegrationTest
+namespace ClientFlurl.Tests.Integration
 {
     public abstract class IntegrationTestBase<TStartup, TIService> where TStartup : class
                                                                    where TIService : class

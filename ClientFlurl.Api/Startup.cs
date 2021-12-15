@@ -1,5 +1,6 @@
 using ClientFlurl.Api.Filters;
-using ClientFlurl.Domain.Entities;
+using ClientFlurl.Domain.Services;
+using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Services;
 using Flurl.Http.Configuration;
@@ -34,7 +35,9 @@ namespace ClientFlurl.Api
             services.AddScoped<IViaCepClient, ViaCepClient>();
             services.AddScoped<INotificationContext, NotificationContext>();
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            var emailConfig = new AppSettings();
+            Configuration.GetSection("AppSettings").Bind(emailConfig);
+            services.AddSingleton(emailConfig);
 
             services.AddControllers(config =>
             {

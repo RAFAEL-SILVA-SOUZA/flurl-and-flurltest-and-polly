@@ -1,11 +1,10 @@
-﻿using ClientFlurl.Domain.Entities;
-using ClientFlurl.Domain.Resources;
+﻿using ClientFlurl.Domain.Resources;
+using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Helpers;
 using Flurl.Http;
 using Flurl.Http.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
@@ -15,16 +14,16 @@ namespace ClientFlurl.Services
     {
         private readonly ILogger<ViaCepClient> logger;
         private readonly INotificationContext notificationContext;
-        private readonly IFlurlClient _flurlClient;        
+        private readonly IFlurlClient _flurlClient;
 
         public ViaCepClient(ILogger<ViaCepClient> logger,
-                            IOptions<AppSettings> option,
+                            AppSettings appSettings,
                             IFlurlClientFactory flurlClientFactory,
-                            INotificationContext notificationContext) : base(option.Value)
+                            INotificationContext notificationContext) : base(appSettings)
         {
             this.logger = logger;
             this.notificationContext = notificationContext;
-            _flurlClient = flurlClientFactory.Get(option.Value.BaseUrl);
+            _flurlClient = flurlClientFactory.Get(appSettings.BaseUrl);
         }
 
         public async Task<Address> GetAddressByZipCode(string zipCode)
@@ -37,7 +36,7 @@ namespace ClientFlurl.Services
                     return default;
                 }
 
-                var response = await GetResponse(zipCode);
+                var response = await GetResponseFromServer(zipCode);
 
                 if (VerifyIfIsSuccessStatusCode(response) || VerifyIfIsExactlySuccessStatusCode(response))
                 {
@@ -53,7 +52,7 @@ namespace ClientFlurl.Services
             }
         }
 
-        private async Task<IFlurlResponse> GetResponse(string zipCode)
+        private async Task<IFlurlResponse> GetResponseFromServer(string zipCode)
         {
             return await BuildRetryPolicy
                                .ExecuteAsync(() => _flurlClient.Request($"{zipCode}/json/")

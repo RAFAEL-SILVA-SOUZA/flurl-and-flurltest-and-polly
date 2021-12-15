@@ -3,7 +3,7 @@ using FizzWare.NBuilder;
 using FluentAssertions;
 using Xunit;
 
-namespace ClientFlurl.Tests.UnitTest
+namespace ClientFlurl.Tests.Unit
 {
     public class AddressTests
     {

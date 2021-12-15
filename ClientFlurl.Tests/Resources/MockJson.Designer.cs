@@ -119,5 +119,14 @@ namespace ClientFlurl.Tests.Resources {
                 return ResourceManager.GetString("Address_invalid", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;zipCode&quot;:&quot;24740-500&quot;,&quot;publicPlace&quot;:&quot;Rua Libanio Ratazi&quot;,&quot;complement&quot;:&quot;&quot;,&quot;district&quot;:&quot;Coelho&quot;,&quot;location&quot;:&quot;São Gonçalo&quot;,&quot;federativeUnit&quot;:&quot;RJ&quot;,&quot;ibge&quot;:&quot;3304904&quot;,&quot;gia&quot;:&quot;&quot;,&quot;ddd&quot;:&quot;21&quot;,&quot;siafi&quot;:&quot;5897&quot;}.
+        /// </summary>
+        internal static string Address_response_expected {
+            get {
+                return ResourceManager.GetString("Address_response_expected", resourceCulture);
+            }
+        }
     }
 }

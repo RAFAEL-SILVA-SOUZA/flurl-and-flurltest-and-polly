@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ClientFlurl.Services;
 using System.Threading.Tasks;
+using ClientFlurl.Domain.Services.Contracts;
 
 namespace ClientFlurl.Api.Controllers
 {
@@ -14,7 +14,7 @@ namespace ClientFlurl.Api.Controllers
         => this.viaCepClient = viaCepClient;
 
         [HttpGet]
-        public async Task<IActionResult> Get(string zipCode)
+        public async Task<IActionResult> Get(string zipCode = "24740500")
         {
             var endereco = await viaCepClient.GetAddressByZipCode(zipCode);
             return endereco != default ? Ok(endereco) : NoContent();

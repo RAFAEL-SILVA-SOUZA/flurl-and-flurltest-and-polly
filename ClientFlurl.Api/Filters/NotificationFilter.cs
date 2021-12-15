@@ -1,4 +1,4 @@
-﻿using ClientFlurl.Domain.Entities;
+﻿using ClientFlurl.Domain.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -19,12 +19,12 @@ namespace ClientFlurl.Api.Filters
         {
             if (_notificationContext.HasNotification())
             {
-                var noticication = _notificationContext.GetNotification();
+                var notification = _notificationContext.GetNotification();
 
-                context.HttpContext.Response.StatusCode = noticication.StatusCode;
+                context.HttpContext.Response.StatusCode = notification.StatusCode;
                 context.HttpContext.Response.ContentType = "application/json";
 
-                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(noticication));
+                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(notification));
 
                 return;
             }

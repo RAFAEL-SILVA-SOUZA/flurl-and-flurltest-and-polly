@@ -1,4 +1,6 @@
-﻿namespace ClientFlurl.Domain.Entities
+﻿using ClientFlurl.Domain.Entities;
+
+namespace ClientFlurl.Domain.Services.Contracts
 {
     public interface INotificationContext
     {

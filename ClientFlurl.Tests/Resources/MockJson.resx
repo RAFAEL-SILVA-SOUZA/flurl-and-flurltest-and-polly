@@ -159,4 +159,7 @@
   "siafi": null
 }</value>
   </data>
+  <data name="Address_response_expected" xml:space="preserve">
+    <value>{"zipCode":"24740-500","publicPlace":"Rua Libanio Ratazi","complement":"","district":"Coelho","location":"São Gonçalo","federativeUnit":"RJ","ibge":"3304904","gia":"","ddd":"21","siafi":"5897"}</value>
+  </data>
 </root>

@@ -16,7 +16,7 @@ namespace ClientFlurl.Tests
               _httpTest.Should().NotBeNull();
         }
 
-        protected T GetInstanceByJson<T>(string json)
+        protected static T GetInstanceByJson<T>(string json)
            => JsonConvert.DeserializeObject<T>(json);
     }
 }

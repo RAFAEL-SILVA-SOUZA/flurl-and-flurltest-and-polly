@@ -1,6 +1,5 @@
 ﻿using ClientFlurl.Entities;
 using Flurl.Http;
-using Microsoft.AspNetCore.Http;
 using Polly;
 using Polly.Retry;
 using System;
@@ -11,13 +10,6 @@ namespace ClientFlurl.Helpers
     public abstract class PollyFlurlHelper
     {
         private readonly AppSettings appSettings;
-        private readonly int[] httpStatusCodesWorthRetrying =
-                               {
-                                   StatusCodes.Status408RequestTimeout,
-                                   StatusCodes.Status400BadRequest,
-                                   StatusCodes.Status503ServiceUnavailable,
-                                   StatusCodes.Status504GatewayTimeout
-                               };
 
         protected PollyFlurlHelper(AppSettings appSettings)
            => this.appSettings = appSettings;
@@ -27,6 +19,6 @@ namespace ClientFlurl.Helpers
                     .WaitAndRetryAsync(appSettings.PollyRetryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
         private bool IsTransientError(FlurlHttpException exception)
-           => exception.StatusCode.HasValue && httpStatusCodesWorthRetrying.Contains(exception.StatusCode.Value);
+           => exception.StatusCode.HasValue && appSettings.PollyRetryStatusCodes.Contains(exception.StatusCode.Value);
     }
 }

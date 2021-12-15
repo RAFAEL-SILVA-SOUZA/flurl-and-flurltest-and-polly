@@ -1,7 +1,7 @@
 ﻿using ClientFlurl.Entities;
 using System.Threading.Tasks;
 
-namespace ClientFlurl.Services
+namespace ClientFlurl.Domain.Services.Contracts
 {
     public interface IViaCepClient
     {

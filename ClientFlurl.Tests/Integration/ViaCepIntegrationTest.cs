@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ClientFlurl.Tests.IntegrationTest
+namespace ClientFlurl.Tests.Integration
 {
     public class ViaCepIntegrationTest : IntegrationTestBase<Startup, ViaCepClient>
     {
@@ -44,8 +44,6 @@ namespace ClientFlurl.Tests.IntegrationTest
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-
-
         [Fact(DisplayName = "Should return http status code of success and invalid address")]
         public async Task Should_be_get_address_by_cep_success_and_invalid_address()
         {
@@ -73,6 +71,9 @@ namespace ClientFlurl.Tests.IntegrationTest
             // Assert
             response.EnsureSuccessStatusCode();
             response.Content.Headers.ContentType.ToString().Should().BeEquivalentTo("application/json; charset=utf-8");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            responseContent.Should().Be(MockJson.Address_response_expected);
+
         }
     }
 }

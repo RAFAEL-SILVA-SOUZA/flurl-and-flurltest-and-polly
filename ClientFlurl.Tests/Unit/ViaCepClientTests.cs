@@ -1,3 +1,4 @@
+using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Services;
 using FluentAssertions;
@@ -8,15 +9,14 @@ using NSubstitute;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ClientFlurl.Tests
+namespace ClientFlurl.Tests.Unit
 {
     public class ViaCepClientTests : UnitTestBase<IViaCepClient, ViaCepClient>
     {
-        public ViaCepClientTests() => PrepareService("https://viacep.com.br/ws/");
         private const string zip_code = "24740500";
 
 
-        [Fact(DisplayName = "Badrequest if the method not got the object")]
+        [Fact(DisplayName = "Bad Request if the method not got the object")]
         public async Task Should_be_badrequest_on_getaddressbyzipcode()
         {
             //Arrange
