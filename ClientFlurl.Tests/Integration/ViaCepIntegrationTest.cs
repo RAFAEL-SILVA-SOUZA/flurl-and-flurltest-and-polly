@@ -44,11 +44,11 @@ namespace ClientFlurl.Tests.Integration
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [Fact(DisplayName = "Should return http status code of success and and empty content")]
+        [Fact(DisplayName = "Should return http status code of success and empty content")]
         public async Task Should_be_get_address_by_cep_success_and_invalid_address()
         {
             //Arrange
-            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.NoContent, MockJson.Address_invalid);
+            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.OK, MockJson.Address_invalid);
             CreateServer();
 
             // Act

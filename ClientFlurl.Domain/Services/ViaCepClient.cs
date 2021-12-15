@@ -99,7 +99,5 @@ namespace ClientFlurl.Services
             notificationContext.AddNotification(ex.StatusCode.Value, string.Format(Messages.Error_to_received_response, ex.StatusCode), ex.Message);
             logger.LogError(string.Format(Messages.Error_to_received_response, ex.StatusCode));
         }
-
-
     }
 }
