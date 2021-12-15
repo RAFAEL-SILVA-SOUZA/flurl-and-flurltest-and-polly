@@ -6,6 +6,7 @@ using Flurl.Http;
 using Flurl.Http.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ClientFlurl.Services
@@ -18,12 +19,12 @@ namespace ClientFlurl.Services
 
         public ViaCepClient(ILogger<ViaCepClient> logger,
                             AppSettings appSettings,
-                            IFlurlClientFactory flurlClientFactory,
+                            HttpClient httpClient,
                             INotificationContext notificationContext) : base(appSettings)
         {
             this.logger = logger;
             this.notificationContext = notificationContext;
-            _flurlClient = flurlClientFactory.Get(appSettings.BaseUrl);
+            _flurlClient = new FlurlClient(httpClient);
         }
 
         public async Task<Address> GetAddressByZipCode(string zipCode)
