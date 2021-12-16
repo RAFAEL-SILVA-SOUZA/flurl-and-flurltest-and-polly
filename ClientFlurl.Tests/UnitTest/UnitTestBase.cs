@@ -14,7 +14,12 @@ namespace ClientFlurl.Tests
 
         protected virtual void PrepareService(string baseUrl)
         {
-            _appSettings = new AppSettings() { BaseUrl = baseUrl };
+            _appSettings = new AppSettings()
+            {
+                BaseUrl = baseUrl,
+                PollyRetryStatusCodes = new int[] { 400, 408, 503, 504 }
+            };
+
             _logger = Substitute.For<ILogger<TService>>();
             _viaCepClient = (TIService)Activator.CreateInstance(typeof(TService), _logger, _appSettings);
 
