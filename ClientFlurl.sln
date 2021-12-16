@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Domain", "Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Api", "ClientFlurl.Api\ClientFlurl.Api.csproj", "{9595B70E-41A4-4E45-B2C7-4C2304CE3680}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Tests", "__tests__\ClientFlurl.Tests\ClientFlurl.Tests.csproj", "{7FD9E242-42CA-4BBB-9BC8-4A83C63882D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientFlurl.Tests", "ClientFlurl.Tests\ClientFlurl.Tests.csproj", "{7FD9E242-42CA-4BBB-9BC8-4A83C63882D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

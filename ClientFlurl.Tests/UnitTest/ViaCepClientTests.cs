@@ -22,7 +22,7 @@ namespace ClientFlurl.Tests
         public async Task Raise_exception_on_getaddressbyzipcode()
         {
             //Arrange
-            CreateHttpTest(realHttp:true);
+            CreateHttpTest(statusCode: StatusCodes.Status400BadRequest);
 
             //Act
             Func<Task<Address>> act = async () => await _viaCepClient.GetAddressByZipCode("XPTO");
@@ -79,40 +79,6 @@ namespace ClientFlurl.Tests
             //Assert 
             await act.Should().ThrowAsync<FlurlHttpException>().Where(x => x.StatusCode == statusCode);
             _logger.Received(1).Log(LogLevel.Error, string.Format(Resources.Messages.Error_to_received_response, statusCode));
-        }
-
-
-        [Fact(DisplayName = "Test if the method got the object exactly as it came from the server")]
-        public async Task Should_be_getaddressbyzipcode_realhttp_success()
-        {
-            //Arrange
-            var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
-            CreateHttpTest(Resources.MockJson.Address_correct, true);
-
-            //Act
-            var address = await _viaCepClient.GetAddressByZipCode(zip_code);
-
-            //Assert 
-            address.Should().NotBeNull();
-            address.Should().BeOfType<Address>();
-            address.Should().BeEquivalentTo(addressMock);
-            _logger.Received(1).Log(LogLevel.Information, string.Format(Resources.Messages.Success_to_received_response, JsonConvert.SerializeObject(address)));
-        }
-
-        [Fact(DisplayName = "Test if the method got the object other than how it came from the server")]
-        public async Task Should_be_getaddressbyzipcode_realhttp_compare_error()
-        {
-            //Arrange
-            var addressMock = GetInstanceByJson<Address>(Resources.MockJson.Address_incorrect);
-            CreateHttpTest(Resources.MockJson.Address_incorrect, true);
-
-            //Act
-            var address = await _viaCepClient.GetAddressByZipCode(zip_code);
-
-            //Assert 
-            address.Should().NotBeNull();
-            address.Should().BeOfType<Address>();
-            address.Should().NotBeEquivalentTo(addressMock);
         }
     }
 }

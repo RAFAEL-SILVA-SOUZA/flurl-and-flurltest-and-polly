@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ClientFlurl.Api\ClientFlurl.Api.csproj" />
-    <ProjectReference Include="..\..\ClientFlurl.Domain\ClientFlurl.Domain.csproj" />
+    <ProjectReference Include="..\ClientFlurl.Api\ClientFlurl.Api.csproj" />
+    <ProjectReference Include="..\ClientFlurl.Domain\ClientFlurl.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
