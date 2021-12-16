@@ -31,26 +31,31 @@ namespace ClientFlurl.Services
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(zipCode))
-                {
-                    logger.LogError(Messages.Message_null_zip_code);
-                    return default;
-                }
-
-                var response = await GetResponseFromServer(zipCode);
-
-                if (VerifyIfIsSuccessStatusCode(response) || VerifyIfIsExactlySuccessStatusCode(response))
-                {
-                    return default;
-                }
-
-                return await TryValidateAddress(response);
+                return await GetAdrress(zipCode);
             }
             catch (FlurlHttpException ex)
             {
                 HandlerFlurlHttpException(ex);
                 return default;
             }
+        }
+
+        private async Task<Address> GetAdrress(string zipCode)
+        {
+            if (string.IsNullOrWhiteSpace(zipCode))
+            {
+                logger.LogError(Messages.Message_null_zip_code);
+                return default;
+            }
+
+            var response = await GetResponseFromServer(zipCode);
+
+            if (VerifyIfIsSuccessStatusCode(response) || VerifyIfIsExactlySuccessStatusCode(response))
+            {
+                return default;
+            }
+
+            return await TryValidateAddress(response);
         }
 
         private async Task<IFlurlResponse> GetResponseFromServer(string zipCode)

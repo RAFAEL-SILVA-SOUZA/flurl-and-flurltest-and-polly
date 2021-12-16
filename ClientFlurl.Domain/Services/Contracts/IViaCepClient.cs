@@ -5,6 +5,6 @@ namespace ClientFlurl.Domain.Services.Contracts
 {
     public interface IViaCepClient
     {
-        Task<Address> GetAddressByZipCode(string cep);
+        Task<Address> GetAddressByZipCode(string zipCode);
     }
 }
