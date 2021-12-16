@@ -3,7 +3,6 @@ using ClientFlurl.Domain.Services;
 using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Services;
-using Flurl.Http.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

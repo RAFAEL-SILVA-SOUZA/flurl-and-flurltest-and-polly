@@ -1,5 +1,4 @@
 ﻿using ClientFlurl.Entities;
-using System.Threading.Tasks;
 
 namespace ClientFlurl.Tests.Unit
 {
