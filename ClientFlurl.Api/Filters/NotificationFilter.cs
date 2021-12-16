@@ -1,4 +1,4 @@
-﻿using ClientFlurl.Domain.Services.Contracts;
+﻿using ClientFlurl.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -8,9 +8,9 @@ namespace ClientFlurl.Api.Filters
 {
     public class NotificationFilter : IAsyncResultFilter
     {
-        private readonly INotificationContext _notificationContext;
+        private readonly NotificationContext _notificationContext;
 
-        public NotificationFilter(INotificationContext notificationContext)
+        public NotificationFilter(NotificationContext notificationContext)
         {
             _notificationContext = notificationContext;
         }

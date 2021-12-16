@@ -13,7 +13,7 @@ namespace ClientFlurl.Tests
         {
             _httpTest = new HttpTest();
             _httpTest.RespondWith(response, statusCode);
-              _httpTest.Should().NotBeNull();
+            _httpTest.Should().NotBeNull();
         }
 
         protected static T GetInstanceByJson<T>(string json)

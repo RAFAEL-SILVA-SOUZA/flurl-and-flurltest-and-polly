@@ -1,5 +1,6 @@
-﻿using FluentAssertions;
-using Flurl.Http.Configuration;
+﻿using ClientFlurl.Domain.Services;
+using ClientFlurl.Domain.Services.Contracts;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -9,19 +10,22 @@ using System.Net.Http;
 
 namespace ClientFlurl.Tests.Integration
 {
-    public abstract class IntegrationTestBase<TStartup, TIService> where TStartup : class
-                                                                   where TIService : class
+    public abstract class IntegrationTestBase<TStartup, TIService, TService>: TestBase where TStartup : class
+                                                                                       where TIService : class
+                                                                                       where TService : class
     {
         private TestServer _server;
         protected HttpClient _client;
-        protected IFlurlClientFactory _flurlClientFactory;
+        protected TIService _service;
 
-        protected ILogger<TIService> _logger;
+        protected ILogger<TService> _logger;
+        protected NotificationContext _notificationContext;
 
         public IntegrationTestBase()
         {
-            _flurlClientFactory = Substitute.For<IFlurlClientFactory>();
-            _logger = Substitute.For<ILogger<TIService>>();
+            _service = Substitute.For<TIService>();
+            _logger = Substitute.For<ILogger<TService>>();
+            _notificationContext = Substitute.For<NotificationContext>();
         }
 
         protected void CreateServer()
@@ -31,10 +35,15 @@ namespace ClientFlurl.Tests.Integration
                 .UseEnvironment("Test")
                 .ConfigureTestServices(services =>
                 {
-                    services.RemoveAll<IFlurlClientFactory>();
-                    services.RemoveAll<ILogger<TIService>>();
-                    services.TryAddScoped(x => _flurlClientFactory);
+                    services.RemoveAll<ILogger<TService>>();
                     services.TryAddScoped(x => _logger);
+
+                    services.RemoveAll<NotificationContext>();
+                    services.TryAddScoped(x => _notificationContext);
+
+                    services.RemoveAll<TIService>();
+                    services.RemoveAll<TService>();
+                    services.TryAddScoped(x => _service);
                 })
                 .UseStartup<TStartup>());
 

@@ -1,9 +1,8 @@
 ﻿using ClientFlurl.Domain.Entities;
-using ClientFlurl.Domain.Services.Contracts;
 
 namespace ClientFlurl.Domain.Services
 {
-    public class NotificationContext : INotificationContext
+    public class NotificationContext
     {
         private Notification _notification;
 

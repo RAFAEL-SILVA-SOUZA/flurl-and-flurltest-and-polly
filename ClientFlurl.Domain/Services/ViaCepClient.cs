@@ -1,9 +1,9 @@
 ﻿using ClientFlurl.Domain.Resources;
+using ClientFlurl.Domain.Services;
 using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Helpers;
 using Flurl.Http;
-using Flurl.Http.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -14,13 +14,13 @@ namespace ClientFlurl.Services
     public class ViaCepClient : PollyFlurlHelper, IViaCepClient
     {
         private readonly ILogger<ViaCepClient> logger;
-        private readonly INotificationContext notificationContext;
+        private readonly NotificationContext notificationContext;
         private readonly IFlurlClient _flurlClient;
 
         public ViaCepClient(ILogger<ViaCepClient> logger,
                             AppSettings appSettings,
                             HttpClient httpClient,
-                            INotificationContext notificationContext) : base(appSettings)
+                            NotificationContext notificationContext) : base(appSettings)
         {
             this.logger = logger;
             this.notificationContext = notificationContext;

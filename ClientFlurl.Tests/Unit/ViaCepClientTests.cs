@@ -38,8 +38,8 @@ namespace ClientFlurl.Tests.Unit
         public async Task Should_be_getaddressbyzipcode_success()
         {
             //Arrange
-            var enderecoMock = GetInstanceByJson<Address>(Resources.MockJson.Address_correct);
-            CreateHttpTest(Resources.MockJson.Address_correct);
+            var enderecoMock = Mocks.AddressCorrect();
+            CreateHttpTest(JsonConvert.SerializeObject(enderecoMock));
 
             //Act
             var address = await _viaCepClient.GetAddressByZipCode(zip_code);

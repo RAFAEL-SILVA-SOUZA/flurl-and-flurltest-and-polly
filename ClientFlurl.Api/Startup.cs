@@ -31,13 +31,12 @@ namespace ClientFlurl.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddSingleton<IFlurlClientFactory, PerBaseUrlFlurlClientFactory>();
-            services.AddScoped<INotificationContext, NotificationContext>();
+            services.AddScoped<NotificationContext>();
 
             services.AddHttpClient<IViaCepClient, ViaCepClient>(config =>
             {
                 config.BaseAddress = new Uri(Configuration["AppSettings:BaseUrl"]);
+
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 

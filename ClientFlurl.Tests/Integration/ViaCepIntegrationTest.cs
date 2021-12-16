@@ -1,8 +1,9 @@
 ﻿using ClientFlurl.Api;
+using ClientFlurl.Domain.Services.Contracts;
 using ClientFlurl.Entities;
 using ClientFlurl.Services;
-using ClientFlurl.Tests.Extensions;
 using ClientFlurl.Tests.Resources;
+using ClientFlurl.Tests.Unit;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -12,14 +13,18 @@ using Xunit;
 
 namespace ClientFlurl.Tests.Integration
 {
-    public class ViaCepIntegrationTest : IntegrationTestBase<Startup, ViaCepClient>
+    public class ViaCepIntegrationTest : IntegrationTestBase<Startup, IViaCepClient, ViaCepClient>
     {
 
         [Fact(DisplayName = "Should return internal server error when passed an invalid zip code")]
         public async Task Raise_exception_on_get_address_by_cep()
         {
             //Arrange
-            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.BadRequest);
+            _service.When(x => x.GetAddressByZipCode(Arg.Any<string>())).Do(x =>
+            {
+                _logger.LogError(string.Format(Messages.Error_to_received_response, (int)HttpStatusCode.BadRequest));
+                _notificationContext.AddNotification((int)HttpStatusCode.BadRequest, string.Format(Messages.Error_to_received_response, (int)HttpStatusCode.BadRequest));
+            });
             CreateServer();
 
             // Act
@@ -34,7 +39,6 @@ namespace ClientFlurl.Tests.Integration
         public async Task Should_be_get_address_by_cep_no_content()
         {
             //Arrange
-            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.NoContent);
             CreateServer();
 
             // Act
@@ -45,10 +49,10 @@ namespace ClientFlurl.Tests.Integration
         }
 
         [Fact(DisplayName = "Should return http status code of success and empty content")]
-        public async Task Should_be_get_address_by_cep_success_and_invalid_address()
+        public async Task Should_be_get_address_by_cep_success_and_empty_content()
         {
             //Arrange
-            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.OK, MockJson.Address_invalid);
+            _service.GetAddressByZipCode(Arg.Any<string>()).Returns(default(Address));
             CreateServer();
 
             // Act
@@ -62,7 +66,7 @@ namespace ClientFlurl.Tests.Integration
         public async Task Should_be_get_address_by_cep()
         {
             //Arrange
-            _flurlClientFactory.BuildFlurlClientFactory<Address>(HttpStatusCode.OK, MockJson.Address_correct);
+            _service.GetAddressByZipCode(Arg.Any<string>()).Returns(Mocks.AddressCorrect());
             CreateServer();
 
             // Act
@@ -71,9 +75,6 @@ namespace ClientFlurl.Tests.Integration
             // Assert
             response.EnsureSuccessStatusCode();
             response.Content.Headers.ContentType.ToString().Should().BeEquivalentTo("application/json; charset=utf-8");
-            var responseContent = await response.Content.ReadAsStringAsync();
-            responseContent.Should().Be(MockJson.Address_response_expected);
-
         }
     }
 }
