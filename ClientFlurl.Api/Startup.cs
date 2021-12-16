@@ -36,7 +36,6 @@ namespace ClientFlurl.Api
             services.AddHttpClient<IViaCepClient, ViaCepClient>(config =>
             {
                 config.BaseAddress = new Uri(Configuration["AppSettings:BaseUrl"]);
-
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 
@@ -48,6 +47,7 @@ namespace ClientFlurl.Api
             {
                 config.Filters.Add<NotificationFilter>();
             });
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientFlurl.Api", Version = "v1" });
