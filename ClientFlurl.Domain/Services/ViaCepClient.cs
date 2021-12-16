@@ -16,10 +16,10 @@ namespace ClientFlurl.Services
         private readonly AppSettings appSettings;
 
         public ViaCepClient(ILogger<ViaCepClient> logger, 
-                            IOptions<AppSettings> option) : base(option.Value)
+                            AppSettings appSettings) : base(appSettings)
         {
             this.logger = logger;
-            appSettings = option.Value;
+            this.appSettings = appSettings;
         }
 
         public async Task<Address> GetAddressByZipCode(string cep)

@@ -29,7 +29,11 @@ namespace ClientFlurl.Api
         {
             services.AddGlobalExceptionHandlerMiddleware();
             services.AddScoped<IViaCepClient, ViaCepClient>();
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            var emailConfig = new AppSettings();
+            Configuration.GetSection("AppSettings").Bind(emailConfig);
+            services.AddSingleton(emailConfig);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
